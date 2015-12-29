@@ -1,8 +1,10 @@
+import flask
 from flask import render_template, flash, redirect
 from app import app
 from .forms import LoginForm
 from HtmlClarifai2DArray import *
 # index view function suppressed for brevity
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -11,7 +13,7 @@ def input():
     if form.validate_on_submit():
           flash('Login requested for OpenID="%s", remember_me=%s' %
                 (form.openid.data, str(form.remember_me.data)))
-          return redirect('/clarifai')
+          return redirect('/clarifai?login=%s' % form.openid.data)
     return render_template('login.html',
                            title='Sign In',
                            form=form,
@@ -19,11 +21,20 @@ def input():
 
 @app.route('/clarifai', methods=['GET', 'POST'])
 def images():
+        openid = flask.request.args.get('login')
+#        ret = flask.request.args.get('login')
+#        print '*******'
+#        print type(ret)
+#        print ret
+#        print '*******'
+#        return ret
+
 	#keywords = HtmlClarifai2DArray("kellylpt")
-	clari = HtmlClarifai2DArray("kellylpt")
+	#clari = HtmlClarifai2DArray("kellylpt")
+	clari = HtmlClarifai2DArray(openid)
         
         
-        response = urllib2.urlopen(clari.ig_username('kellylpt'), timeout=20)
+        response = urllib2.urlopen(clari.ig_username(openid), timeout=20)
         print '2----------- response'
         print response
         print '2-----------'
@@ -36,10 +47,11 @@ def images():
         print '11----------------'
         
         return ','.join(insta_keywords[0])
+#############################################
          
 
 
-        response = urllib2.urlopen(HtmlClarifai2DArray.ig_username('kellylpt'), timeout=10)
+        response = urllib2.urlopen(HtmlClarifai2DArray.ig_username(openid), timeout=10)
         print '2----------- response'
         print response
         print '2-----------'
