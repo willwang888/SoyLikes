@@ -20,9 +20,25 @@ def input():
 @app.route('/clarifai', methods=['GET', 'POST'])
 def images():
 	#keywords = HtmlClarifai2DArray("kellylpt")
+	clari = HtmlClarifai2DArray("kellylpt")
         
         
+        response = urllib2.urlopen(clari.ig_username('kellylpt'), timeout=10)
+        print '2----------- response'
+        print response
+        print '2-----------'
+        insta_html = response.read()
+        insta_keywords = clari.get_keywords(clari.get_sources(insta_html))
         
+        print '11----------------'
+        print insta_keywords
+        print type(insta_keywords)
+        print '11----------------'
+        
+        return ','.join(insta_keywords[0])
+         
+
+
         response = urllib2.urlopen(HtmlClarifai2DArray.ig_username('kellylpt'), timeout=10)
         print '2----------- response'
         print response
