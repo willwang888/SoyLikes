@@ -23,7 +23,7 @@ def images():
 	clari = HtmlClarifai2DArray("kellylpt")
         
         
-        response = urllib2.urlopen(clari.ig_username('kellylpt'), timeout=10)
+        response = urllib2.urlopen(clari.ig_username('kellylpt'), timeout=20)
         print '2----------- response'
         print response
         print '2-----------'

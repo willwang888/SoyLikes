@@ -88,7 +88,7 @@ class HtmlClarifai2DArray:
 
   def return_photo_url(self, html):
     photos = []
-    response = urllib2.urlopen(html, timeout=10)
+    response = urllib2.urlopen(html, timeout=20)
     html = response.read()
     location = 0
     for i in range(len(html)):
